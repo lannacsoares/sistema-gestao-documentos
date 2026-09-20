@@ -4,15 +4,90 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sistema de Gestão de Documentos</title>
+  <meta name="description" content="Envie documentos, consulte a lista e registre comentários.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@600;700&display=swap">
   <link rel="stylesheet" href="/css/tokens.css">
-  <style>
-    body { margin: 0; font-family: system-ui, sans-serif; color: var(--cor-texto); background: var(--cor-branco); }
-    header { background: var(--cor-primaria); color: var(--cor-branco); padding: 1.25rem 2rem; }
-    main { padding: 2rem; }
-  </style>
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/componentes.css">
 </head>
 <body>
-  <header><strong>Sistema de Gestão de Documentos</strong></header>
-  <main><p>Olá.</p></main>
+  <div id="faixa-offline" class="faixa-offline" role="status" hidden>
+    Você está sem conexão com a internet. Assim que ela voltar, tente novamente.
+  </div>
+
+  <header class="cabecalho">
+    <div class="cabecalho__interno">
+      <h1>Sistema de Gestão de Documentos</h1>
+      <nav aria-label="Principal"><a href="/lixeira.html">Lixeira</a></nav>
+    </div>
+  </header>
+
+  <main class="principal">
+    <!-- Espaço reservado para a barra de uso do armazenamento (fase 6) -->
+    <div id="uso-armazenamento" hidden></div>
+
+    <section class="secao" aria-labelledby="titulo-envio">
+      <h2 id="titulo-envio">Enviar documento</h2>
+      <form id="form-envio" class="formulario" novalidate>
+        <div class="campo">
+          <label for="campo-titulo">Título</label>
+          <input id="campo-titulo" name="titulo" type="text" maxlength="200" autocomplete="off" required>
+        </div>
+        <div class="campo">
+          <label for="campo-descricao">Descrição <span class="opcional">(opcional)</span></label>
+          <textarea id="campo-descricao" name="descricao" maxlength="2000"></textarea>
+        </div>
+        <div class="campo">
+          <label for="campo-arquivo">Arquivo</label>
+          <input id="campo-arquivo" name="arquivo" type="file" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" aria-describedby="ajuda-arquivo" required>
+          <p id="ajuda-arquivo" class="ajuda">PDF, JPG ou PNG, até 10 MB.</p>
+        </div>
+        <div id="area-progresso" hidden>
+          <label for="progresso" id="texto-progresso">Enviando…</label>
+          <progress id="progresso" max="100" value="0"></progress>
+        </div>
+        <div id="status-envio" role="status" aria-live="polite" hidden></div>
+        <div>
+          <button id="botao-enviar" type="submit" class="botao">Enviar documento</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="secao" aria-labelledby="titulo-lista">
+      <h2 id="titulo-lista">Documentos</h2>
+      <div id="status-lista" role="status" aria-live="polite" hidden></div>
+      <ul id="lista-documentos" class="lista"></ul>
+      <p id="vazio-documentos" class="vazio" hidden>Nenhum documento enviado ainda.</p>
+    </section>
+  </main>
+
+  <dialog id="dlg-comentarios" aria-labelledby="dlg-com-titulo">
+    <div class="dialogo__cabecalho">
+      <h2 id="dlg-com-titulo">Comentários</h2>
+      <button id="dlg-com-fechar" type="button" class="botao botao--secundario botao--pequeno">Fechar</button>
+    </div>
+    <ul id="lista-comentarios" class="comentarios"></ul>
+    <p id="vazio-comentarios" class="vazio" hidden>Ainda não há comentários.</p>
+    <form id="form-comentario" class="formulario" novalidate>
+      <!-- Espaço reservado para o campo opcional "seu nome" (fase 6) -->
+      <div class="campo">
+        <label for="campo-comentario">Novo comentário</label>
+        <textarea id="campo-comentario" name="texto" maxlength="2000"></textarea>
+        <div id="contador-comentario" class="contador" aria-hidden="true">0 / 2000</div>
+      </div>
+      <div id="status-comentario" role="status" aria-live="polite" hidden></div>
+      <div>
+        <button id="botao-comentar" type="submit" class="botao">Comentar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <footer class="rodape">
+    <p>Projeto de avaliação. Use apenas documentos fictícios ou públicos.</p>
+  </footer>
+
+  <script type="module" src="/js/documentos.js"></script>
 </body>
 </html>
