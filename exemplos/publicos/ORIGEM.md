@@ -1,0 +1,10 @@
+# Origem dos documentos públicos
+
+Proposições legislativas (Projetos de Lei de 2024) da Câmara dos Deputados, baixadas **uma única vez** em 20/09/2026 por meio da API de Dados Abertos (https://dadosabertos.camara.leg.br/) e do site da Câmara. São textos públicos, sem dados pessoais de cidadãos (confirmado por conferência do texto). Não há chamadas à API da Câmara em produção.
+
+| Arquivo | Proposição | Tema | Ementa | Link do inteiro teor | Acesso |
+|---|---|---|---|---|---|
+| PL_3789-2024_remoção_de_servidores.pdf | PL 3789/2024 | Servidores públicos | Altera a Lei 8.112, de 11 de dezembro de 1990, para garantir o direito à remoção a pedido, independente do interesse da Administração, na hipótese de comprovado risco excepcional e efetivo à integridade física de servidores ou seus familiares. | https://www.camara.leg.br/proposicoesWeb/prop_mostrarintegra?codteor=2480895 | 20/09/2026 |
+| PL_4790-2024_aposentadoria_por_acidente_em_serviço.pdf | PL 4790/2024 | Previdência | Dispõe sobre hipóteses de aposentadoria ou seguro por acidente em serviço ou no exercício da função para policiais federais, para policiais civis dos Estados, para os membros das polícias militares e dos corpos de bombeiros militares, para policiais penais e para guardas municipais, bem como estabelece forma de custeio. | https://www.camara.leg.br/proposicoesWeb/prop_mostrarintegra?codteor=2837935 | 20/09/2026 |
+| PL_1746-2024_assistência_sindical_na_rescisão.pdf | PL 1746/2024 | Sindicatos | Altera o art. 477 da Consolidação das Leis do Trabalho - CLT, para restabelecer a assistência obrigatória das entidades sindicais ou da autoridade do Ministério do Trabalho e Emprego nas rescisões de contratos de trabalho de empregados com mais de um ano de serviço. | https://www.camara.leg.br/proposicoesWeb/prop_mostrarintegra?codteor=2421825 | 20/09/2026 |
+| PL_4666-2024_sigilo_de_testemunha_no_processo_trabalhista.pdf | PL 4666/2024 | Trabalho | Dispõe sobre o sigilo de identificação de testemunha do empregado no processo trabalhista. | https://www.camara.leg.br/proposicoesWeb/prop_mostrarintegra?codteor=2832551 | 20/09/2026 |
