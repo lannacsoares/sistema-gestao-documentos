@@ -3,11 +3,12 @@ from fastapi import FastAPI
 
 from app.db import obter_cliente
 from app.erros import erro, registrar_handlers
-from app.rotas import documentos
+from app.rotas import comentarios, documentos
 
 app = FastAPI(title="Sistema de Gestão de Documentos", docs_url="/api/docs", openapi_url="/api/openapi.json")
 registrar_handlers(app)
 app.include_router(documentos.router)
+app.include_router(comentarios.router)
 
 
 @app.get("/api/saude")
