@@ -41,6 +41,9 @@ a { color: var(--cor-acento); }
   justify-content: space-between;
   gap: var(--esp-1) var(--esp-2);
 }
+.cabecalho__marca { display: flex; flex-wrap: wrap; align-items: center; gap: var(--esp-1) var(--esp-3); }
+.cabecalho__logo { display: inline-flex; }
+.cabecalho__logo img { display: block; height: 2rem; width: auto; }
 .cabecalho h1 { margin: 0; font-size: 1.15rem; font-weight: 600; color: var(--cor-branco); }
 .cabecalho a { color: var(--cor-branco); }
 
