@@ -1,4 +1,5 @@
 """Ponto de entrada da API. A Vercel detecta a instância `app` neste arquivo."""
+import os
 from pathlib import Path
 
 from fastapi import FastAPI
@@ -26,8 +27,9 @@ def saude():
     return {"status": "ok"}
 
 
-# Em desenvolvimento a própria API serve o front-end. Na Vercel, `public/` é servido pela CDN
-# antes de chegar aqui (e a pasta nem vai junto com a função), então o bloco é ignorado.
+# Em desenvolvimento local a própria API serve o front-end. Na Vercel, `public/` é servido pela CDN
+# no nível da plataforma (a documentação pede para NÃO montá-lo com app.mount), então aqui só monta
+# fora da Vercel, onde a variável VERCEL não existe.
 _PUBLIC = Path(__file__).resolve().parent.parent / "public"
-if _PUBLIC.is_dir():
+if _PUBLIC.is_dir() and not os.getenv("VERCEL"):
     app.mount("/", StaticFiles(directory=_PUBLIC, html=True), name="front")
