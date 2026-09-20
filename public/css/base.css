@@ -12,12 +12,12 @@ body {
   font-size: 1rem;
   line-height: 1.55;
   color: var(--cor-texto);
-  background: var(--cor-branco);
+  background: var(--cor-fundo);
 }
 
 h1, h2, h3 {
   font-family: var(--fonte-titulo);
-  color: var(--cor-primaria);
+  color: var(--cor-titulo);
   line-height: 1.25;
   margin: 0 0 var(--esp-2);
 }
@@ -25,7 +25,7 @@ h2 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.01em; }
 h3 { font-size: 1.05rem; }
 p { margin: 0 0 var(--esp-2); }
 
-a { color: var(--cor-acento); }
+a { color: var(--cor-link); }
 
 .cabecalho {
   background: var(--cor-primaria);
@@ -60,6 +60,16 @@ a { color: var(--cor-acento); }
 .nav { display: flex; gap: var(--esp-3); }
 .nav a { transition: color 150ms ease-out, border-color 150ms ease-out; text-decoration: none; padding: 0.25rem 0; border-bottom: 2px solid transparent; color: rgba(255, 255, 255, 0.85); }
 .nav a:hover { border-bottom-color: rgba(255, 255, 255, 0.6); color: var(--cor-branco); }
+.nav__tema {
+  font: inherit; cursor: pointer; margin-left: var(--esp-1);
+  color: var(--cor-branco); background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.5); border-radius: var(--raio);
+  padding: 0.3rem 0.75rem; min-height: 2.25rem;
+  transition: background-color 150ms ease-out, border-color 150ms ease-out;
+}
+.nav__tema:hover { background: rgba(255, 255, 255, 0.12); border-color: var(--cor-branco); }
+.nav__tema[aria-pressed="true"] { background: var(--cor-branco); color: var(--cor-primaria); border-color: var(--cor-branco); }
+.nav { align-items: center; flex-wrap: wrap; }
 .nav a[aria-current="page"] { color: var(--cor-branco); font-weight: 600; border-bottom-color: var(--cor-branco); }
 
 .principal {
@@ -95,8 +105,8 @@ a { color: var(--cor-acento); }
 .rodape p { margin: 0; }
 
 /* Elementos do navegador que não desenhamos, na paleta */
-::selection { background: var(--cor-primaria); color: var(--cor-branco); }
-input, textarea { caret-color: var(--cor-acento); }
+::selection { background: var(--cor-sel-fundo); color: var(--cor-sel-texto); }
+input, textarea { caret-color: var(--cor-link); }
 * { scrollbar-color: var(--cor-cinza) transparent; }
 
 /* Só para leitores de tela */
@@ -106,7 +116,7 @@ input, textarea { caret-color: var(--cor-acento); }
 }
 
 :focus-visible {
-  outline: 3px solid var(--cor-acento);
+  outline: 3px solid var(--cor-foco);
   outline-offset: 2px;
 }
 .cabecalho :focus-visible, .rodape :focus-visible { outline-color: var(--cor-branco); }
