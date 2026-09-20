@@ -1,5 +1,6 @@
 // Tela principal: formulário de envio e lista de documentos.
 import { api } from './api.js';
+import { iniciarUso } from './armazenamento.js';
 import { iniciarComentarios } from './comentarios.js';
 import { confirmar } from './dialogo.js';
 import { mensagemDoErro } from './mensagens.js';
@@ -26,6 +27,7 @@ const TEMPO_MENSAGEM_MS = 8000;
 const TEMPO_SAIDA_MS = 180; // igual à transição .item--saindo
 const reduzirMovimento = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+const atualizarUso = iniciarUso(document.querySelector('#uso-armazenamento'));
 const envio = criarEnvio();
 const comentarios = iniciarComentarios({ aoAtualizar: () => carregarLista() });
 let enviando = false;
@@ -81,7 +83,10 @@ async function aoEnviar(evento) {
   } finally {
     mostrarEnvio(false); // nunca deixa o botão travado
   }
-  if (enviado) carregarLista(idNovo);
+  if (enviado) {
+    carregarLista(idNovo);
+    atualizarUso();
+  }
 }
 
 form.addEventListener('submit', aoEnviar);
@@ -200,3 +205,4 @@ async function excluir(doc) {
 
 avisar(statusLista, 'info', 'Carregando documentos…');
 carregarLista();
+atualizarUso();

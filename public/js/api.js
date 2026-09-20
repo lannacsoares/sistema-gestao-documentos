@@ -53,6 +53,7 @@ export const api = {
   excluirDocumento: (id) => requisitar('DELETE', `/documentos/${enc(id)}`),
   listarComentarios: (id) => requisitar('GET', `/documentos/${enc(id)}/comentarios`),
   incluirComentario: (id, dados) => requisitar('POST', `/documentos/${enc(id)}/comentarios`, dados),
+  usoArmazenamento: () => requisitar('GET', '/armazenamento'),
   listarLixeira: () => requisitar('GET', '/lixeira'),
   restaurar: (id) => requisitar('POST', `/documentos/${enc(id)}/restaurar`),
   excluirDefinitivo: (id) => requisitar('DELETE', `/documentos/${enc(id)}/definitivo`),
