@@ -46,6 +46,26 @@ def gerar_pdf(destino: Path) -> None:
     pdf.output(str(destino))
 
 
+def gerar_laudo(destino: Path) -> None:
+    """Laudo fictício de uma página, com dados inventados."""
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Helvetica", "B", 16)
+    pdf.cell(0, 12, "LAUDO TECNICO (DOCUMENTO FICTICIO)", new_x="LMARGIN", new_y="NEXT", align="C")
+    pdf.set_font("Helvetica", size=12)
+    pdf.ln(6)
+    linhas = [
+        f"Periciando: {fake.name()}",
+        f"Local da vistoria: {fake.street_address()}, {fake.city()}",
+        f"Data da vistoria: {fake.date_this_year().strftime('%d/%m/%Y')}",
+        "",
+        "Conclusao: documento inventado para demonstrar o sistema. Nenhum dado e real.",
+    ]
+    for linha in linhas:
+        pdf.cell(0, 9, linha, new_x="LMARGIN", new_y="NEXT")
+    pdf.output(str(destino))
+
+
 def gerar_imagens(png: Path, jpg: Path) -> None:
     imagem = Image.new("RGB", (800, 600), "white")
     desenho = ImageDraw.Draw(imagem)
@@ -64,6 +84,7 @@ def main() -> None:
     PASTA.mkdir(exist_ok=True)
     pdf = PASTA / "procuracao_ficticia.pdf"
     gerar_pdf(pdf)
+    gerar_laudo(PASTA / "laudo_ficticio.pdf")
     gerar_imagens(PASTA / "comprovante_ficticio.png", PASTA / "comprovante_ficticio.jpg")
 
     (PASTA / "vazio.pdf").write_bytes(b"")  # 0 bytes
