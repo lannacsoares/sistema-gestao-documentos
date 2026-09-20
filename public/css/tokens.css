@@ -7,12 +7,12 @@
   --cor-branco: #FFFFFF;   /* fundo e texto sobre o cabeçalho escuro */
 
   /* Apoio (fora da marca, tons sóbrios; contraste AA sobre branco) */
-  --cor-texto-suave: #5A5B5D;  /* texto secundário pequeno (6,9:1) */
+  --cor-texto-suave: #5A5B5D;  /* texto secundário pequeno (6,8:1 sobre branco) */
   --cor-fundo-suave: #F4F6F6;  /* faixas e cartões */
   --cor-borda: #D5D9DA;
-  --cor-erro: #7A1F2B;         /* vinho escuro (9,5:1) */
+  --cor-erro: #7A1F2B;         /* vinho escuro (9,1:1 sobre o fundo do aviso) */
   --cor-erro-fundo: #FBEFF0;
-  --cor-sucesso: #1E5B3A;      /* verde escuro (8,1:1) */
+  --cor-sucesso: #1E5B3A;      /* verde escuro (7,1:1 sobre o fundo do aviso) */
   --cor-sucesso-fundo: #EAF4EE;
   --cor-aviso-fundo: #F1F1EE;
 
