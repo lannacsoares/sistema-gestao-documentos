@@ -1,0 +1,80 @@
+/* Reset leve, tipografia e estrutura da página */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--fonte-corpo);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--cor-texto);
+  background: var(--cor-branco);
+}
+
+h1, h2, h3 {
+  font-family: var(--fonte-titulo);
+  color: var(--cor-primaria);
+  line-height: 1.25;
+  margin: 0 0 var(--esp-2);
+}
+h2 { font-size: 1.25rem; }
+h3 { font-size: 1.05rem; }
+p { margin: 0 0 var(--esp-2); }
+
+a { color: var(--cor-acento); }
+
+.cabecalho {
+  background: var(--cor-primaria);
+  color: var(--cor-branco);
+}
+.cabecalho__interno {
+  max-width: var(--largura-max);
+  margin: 0 auto;
+  padding: var(--esp-2) var(--esp-2);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-1) var(--esp-2);
+}
+.cabecalho h1 { margin: 0; font-size: 1.15rem; font-weight: 600; color: var(--cor-branco); }
+.cabecalho a { color: var(--cor-branco); }
+
+.principal {
+  flex: 1;
+  width: 100%;
+  max-width: var(--largura-max);
+  margin: 0 auto;
+  padding: var(--esp-3) var(--esp-2) var(--esp-4);
+}
+
+.secao { margin-bottom: var(--esp-4); }
+
+.rodape {
+  background: var(--cor-acento);
+  color: var(--cor-branco);
+  font-size: 0.875rem;
+  padding: var(--esp-2);
+  text-align: center;
+}
+.rodape p { margin: 0; }
+
+/* Só para leitores de tela */
+.so-leitor {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+:focus-visible {
+  outline: 3px solid var(--cor-acento);
+  outline-offset: 2px;
+}
+.cabecalho :focus-visible, .rodape :focus-visible { outline-color: var(--cor-branco); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
