@@ -74,7 +74,8 @@ export function iniciarComentarios({ aoAtualizar }) {
   form.addEventListener('submit', enviar);
   campo.addEventListener('input', atualizarContador);
   document.querySelector('#dlg-com-fechar').addEventListener('click', () => dialogo.close());
-  dialogo.addEventListener('close', () => { documento = null; aoAtualizar(); });
+  // A lista de documentos já é recarregada quando um comentário muda algo; ao fechar não precisa de novo.
+  dialogo.addEventListener('close', () => { documento = null; });
 
   return {
     abrir(doc) {
@@ -88,6 +89,7 @@ export function iniciarComentarios({ aoAtualizar }) {
       lista.replaceChildren();
       vazio.hidden = true;
       dialogo.showModal();
+      titulo.focus(); // o leitor de tela começa pelo título, sem abrir o teclado no celular
       carregar();
     },
   };

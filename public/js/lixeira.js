@@ -17,9 +17,12 @@ function textoPrazo(dias) {
 
 function desenharItem(doc) {
   return el('li', { class: 'item' },
-    el('h3', { class: 'item__titulo' }, doc.titulo),
+    el('div', { class: 'item__topo' },
+      el('h3', { class: 'item__titulo' }, doc.titulo),
+      el('span', { class: 'chip' }, doc.tipo_arquivo.toUpperCase()),
+    ),
     el('p', { class: 'item__meta' },
-      `Excluído em ${formatarData(doc.data_exclusao)} · ${textoPrazo(doc.dias_restantes)} · ${doc.tipo_arquivo.toUpperCase()} · ${formatarTamanho(doc.tamanho_bytes)}`),
+      `Excluído em ${formatarData(doc.data_exclusao)} · ${textoPrazo(doc.dias_restantes)} · ${formatarTamanho(doc.tamanho_bytes)}`),
     el('div', { class: 'item__acoes' },
       el('button', { type: 'button', class: 'botao botao--secundario botao--pequeno', onclick: (e) => restaurar(doc, e.currentTarget) }, 'Restaurar'),
       el('button', { type: 'button', class: 'botao botao--perigo botao--pequeno', onclick: () => excluirDefinitivo(doc) }, 'Excluir definitivamente'),
