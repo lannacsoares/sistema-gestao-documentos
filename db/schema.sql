@@ -43,6 +43,12 @@ returns bigint language sql stable as $$
 $$;
 revoke execute on function public.uso_armazenamento_bytes() from public, anon, authenticated;
 
+-- Permissões explícitas para a API (service_role). Necessárias porque o projeto é criado
+-- com "Automatically expose new tables" desligado. anon e authenticated não recebem nada.
+grant usage on schema public to service_role;
+grant all on table public.documentos, public.comentarios to service_role;
+grant execute on function public.uso_armazenamento_bytes() to service_role;
+
 -- Bucket privado, com limite e tipos permitidos (3ª camada de validação)
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 values ('documentos', 'documentos', false, 10485760,
