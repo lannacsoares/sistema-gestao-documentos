@@ -2,7 +2,7 @@
 from fastapi import FastAPI
 
 from app.db import obter_cliente
-from app.erros import ErroApi, registrar_handlers
+from app.erros import erro, registrar_handlers
 
 app = FastAPI(title="Sistema de Gestão de Documentos", docs_url="/api/docs", openapi_url="/api/openapi.json")
 registrar_handlers(app)
@@ -14,9 +14,5 @@ def saude():
     try:
         obter_cliente().table("documentos").select("id").limit(1).execute()
     except Exception:
-        raise ErroApi(
-            "banco_indisponivel",
-            "O serviço está temporariamente indisponível. Tente novamente em instantes.",
-            503,
-        ) from None
+        raise erro("BANCO_INDISPONIVEL") from None
     return {"status": "ok"}
