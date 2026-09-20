@@ -15,6 +15,7 @@ node_modules/
 
 # Arquivos de teste grandes (gerados por script)
 exemplos/grande.*
+exemplos/exatamente_10mb.pdf
 
 # Sistema operacional
 .DS_Store
