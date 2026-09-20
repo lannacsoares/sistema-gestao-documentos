@@ -6,20 +6,20 @@
   font-weight: 600;
   padding: 0.6rem 1.1rem;
   min-height: 2.75rem;
-  border: 1px solid var(--cor-botao);
+  border: 1px solid var(--cor-primaria);
   border-radius: var(--raio);
-  background: var(--cor-botao);
-  color: var(--cor-botao-texto);
+  background: var(--cor-primaria);
+  color: var(--cor-branco);
   cursor: pointer;
   transition: background-color 150ms ease-out, border-color 150ms ease-out, color 150ms ease-out;
 }
-.botao:hover:not(:disabled) { background: var(--cor-botao-hover); border-color: var(--cor-botao-hover); }
+.botao:hover:not(:disabled) { background: var(--cor-acento); border-color: var(--cor-acento); }
 .botao:disabled { background: var(--cor-fundo-suave); border-color: var(--cor-borda); color: var(--cor-texto-suave); cursor: not-allowed; }
 
-.botao--secundario { background: var(--cor-superficie); color: var(--cor-titulo); border-color: var(--cor-contorno); }
-.botao--secundario:hover:not(:disabled) { background: var(--cor-fundo-suave); color: var(--cor-titulo); border-color: var(--cor-contorno); }
+.botao--secundario { background: var(--cor-branco); color: var(--cor-primaria); }
+.botao--secundario:hover:not(:disabled) { background: var(--cor-fundo-suave); color: var(--cor-acento); }
 
-.botao--perigo { background: var(--cor-superficie); color: var(--cor-erro); border-color: var(--cor-erro); }
+.botao--perigo { background: var(--cor-branco); color: var(--cor-erro); border-color: var(--cor-erro); }
 .botao--perigo:hover:not(:disabled) { background: var(--cor-erro-fundo); color: var(--cor-erro); border-color: var(--cor-erro); }
 
 .botao--perigo-discreto { background: transparent; border-color: transparent; color: var(--cor-erro); text-decoration: underline; text-underline-offset: 0.2em; }
@@ -30,7 +30,7 @@
 /* --- Formulários --- */
 .formulario { display: grid; gap: var(--esp-2); max-width: 40rem; }
 .campo { display: grid; gap: 0.35rem; }
-.campo label { font-weight: 600; color: var(--cor-titulo); }
+.campo label { font-weight: 600; color: var(--cor-primaria); }
 .campo .opcional { font-weight: 400; color: var(--cor-texto-suave); }
 .campo .ajuda { font-size: 0.875rem; color: var(--cor-texto-suave); margin: 0; }
 
@@ -39,11 +39,11 @@ input[type="text"], textarea {
   width: 100%;
   padding: 0.6rem 0.75rem;
   color: var(--cor-texto);
-  background: var(--cor-superficie);
-  border: 1px solid var(--cor-campo-borda);
+  background: var(--cor-branco);
+  border: 1px solid var(--cor-cinza);
   border-radius: var(--raio);
 }
-.campo__rotulo { font-weight: 600; color: var(--cor-titulo); }
+.campo__rotulo { font-weight: 600; color: var(--cor-primaria); }
 textarea { min-height: 5rem; resize: vertical; }
 
 /* Escolha de arquivo: o input nativo fica invisível (mas focável); o botão e o texto ficam em português */
@@ -51,20 +51,20 @@ textarea { min-height: 5rem; resize: vertical; }
   position: relative;
   display: flex; flex-wrap: wrap; align-items: center; gap: var(--esp-1) var(--esp-2);
   padding: var(--esp-2);
-  border: 1px dashed var(--cor-campo-borda);
+  border: 1px dashed var(--cor-cinza);
   border-radius: var(--raio);
-  background: var(--cor-superficie);
+  background: var(--cor-branco);
 }
-.arquivo--sobre { border-style: solid; border-color: var(--cor-contorno); background: var(--cor-fundo-suave); }
+.arquivo--sobre { border-style: solid; border-color: var(--cor-primaria); background: var(--cor-fundo-suave); }
 .arquivo__input { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; }
-.arquivo__input:focus-visible + label { outline: 3px solid var(--cor-foco); outline-offset: 2px; }
+.arquivo__input:focus-visible + label { outline: 3px solid var(--cor-acento); outline-offset: 2px; }
 .arquivo { transition: border-color 150ms ease-out, background-color 150ms ease-out; }
 .arquivo .botao { display: inline-flex; align-items: center; }
 .arquivo__nome { flex: 1 1 10rem; font-size: 0.9rem; color: var(--cor-texto-suave); overflow-wrap: anywhere; }
 .arquivo__nome--escolhido { color: var(--cor-texto); font-weight: 600; }
 .contador { font-size: 0.8125rem; color: var(--cor-texto-suave); text-align: right; }
 
-progress { width: 100%; height: 0.75rem; accent-color: var(--cor-botao); }
+progress { width: 100%; height: 0.75rem; accent-color: var(--cor-primaria); }
 
 /* --- Avisos (sempre com texto: nunca só a cor) --- */
 .aviso {
@@ -80,14 +80,14 @@ progress { width: 100%; height: 0.75rem; accent-color: var(--cor-botao); }
 .aviso { animation: aparecer 240ms cubic-bezier(0.16, 1, 0.3, 1); }
 .aviso--erro { color: var(--cor-erro); background: var(--cor-erro-fundo); border-color: var(--cor-erro); }
 .aviso--sucesso { color: var(--cor-sucesso); background: var(--cor-sucesso-fundo); border-color: var(--cor-sucesso); }
-.aviso--info { color: var(--cor-texto); background: var(--cor-aviso-fundo); border-color: var(--cor-campo-borda); }
+.aviso--info { color: var(--cor-texto); background: var(--cor-aviso-fundo); border-color: var(--cor-cinza); }
 .aviso__rotulo { font-weight: 700; }
 .aviso__texto { flex: 1 1 12rem; }
 
 .faixa-offline {
   background: var(--cor-aviso-fundo);
   color: var(--cor-texto);
-  border-bottom: 1px solid var(--cor-campo-borda);
+  border-bottom: 1px solid var(--cor-cinza);
   text-align: center;
   padding: 0.5rem var(--esp-2);
   font-size: 0.9rem;
@@ -108,7 +108,7 @@ progress { width: 100%; height: 0.75rem; accent-color: var(--cor-botao); }
 .chip {
   flex: none; margin-top: 0.1rem;
   font-family: var(--fonte-titulo); font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.06em;
-  color: var(--cor-titulo); background: var(--cor-fundo-suave);
+  color: var(--cor-primaria); background: var(--cor-fundo-suave);
   border: 1px solid var(--cor-borda); border-radius: 4px; padding: 0.15rem 0.4rem;
 }
 .item__meta { margin: 0; font-size: 0.875rem; color: var(--cor-texto-suave); }
@@ -130,9 +130,9 @@ dialog {
   border: 1px solid var(--cor-borda);
   border-radius: var(--raio);
   color: var(--cor-texto);
-  background: var(--cor-superficie);
+  background: var(--cor-branco);
 }
-dialog::backdrop { background: var(--cor-veu); }
+dialog::backdrop { background: rgba(3, 46, 66, 0.5); }
 .dialogo__acoes { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--esp-1); margin-top: var(--esp-2); }
 .dialogo__cabecalho { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--esp-2); }
 .dialogo__cabecalho h2 { font-size: 1.15rem; min-width: 0; overflow-wrap: anywhere; }
