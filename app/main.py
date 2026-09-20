@@ -1,5 +1,8 @@
 """Ponto de entrada da API. A Vercel detecta a instância `app` neste arquivo."""
+from pathlib import Path
+
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 
 from app.db import obter_cliente
 from app.erros import erro, registrar_handlers
@@ -21,3 +24,10 @@ def saude():
     except Exception:
         raise erro("BANCO_INDISPONIVEL") from None
     return {"status": "ok"}
+
+
+# Em desenvolvimento a própria API serve o front-end. Na Vercel, `public/` é servido pela CDN
+# antes de chegar aqui (e a pasta nem vai junto com a função), então o bloco é ignorado.
+_PUBLIC = Path(__file__).resolve().parent.parent / "public"
+if _PUBLIC.is_dir():
+    app.mount("/", StaticFiles(directory=_PUBLIC, html=True), name="front")
