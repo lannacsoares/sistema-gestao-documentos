@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# Segredos e configuração local
+.env
+
+# Vercel
+.vercel/
+
+# Node (caso surja)
+node_modules/
+
+# Arquivos de teste grandes (gerados por script)
+exemplos/grande.*
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini

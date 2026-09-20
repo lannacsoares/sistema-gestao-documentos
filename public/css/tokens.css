@@ -1,0 +1,8 @@
+/* Paleta oficial da RMH (variáveis do site), sem o dourado. Troque as cores só aqui. */
+:root {
+  --cor-primaria: #0D3638; /* cabeçalho, botões principais, títulos */
+  --cor-acento: #032E42;   /* hover, foco, rodapé, links */
+  --cor-texto: #3A3A3A;    /* texto do corpo */
+  --cor-cinza: #868789;    /* bordas, ícones, textos grandes */
+  --cor-branco: #FFFFFF;   /* fundo e texto sobre o cabeçalho escuro */
+}
