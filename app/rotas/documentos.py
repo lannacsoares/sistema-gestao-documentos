@@ -2,7 +2,7 @@
 from typing import Literal
 from uuid import UUID, uuid4
 
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Query, Response
 
 from app import config, servicos, storage, validadores
 from app.erros import ErroApi, erro
@@ -107,3 +107,16 @@ def gerar_link(documento_id: UUID, modo: Literal["visualizar", "baixar"] = Query
     url = storage.criar_url_leitura(documento["caminho_arquivo"], baixar_como)
     return {"url": url, "expira_em_s": config.SIGNED_URL_TTL_S}
 
+
+
+@router.delete("/{documento_id}", status_code=204)
+def excluir(documento_id: UUID):
+    """Envia para a lixeira (exclusão suave). O arquivo continua no Storage."""
+    documento = servicos.obter_documento(documento_id)
+    servicos.exigir_status(documento, "ativo")
+    servicos.executar(
+        servicos.tabela("documentos")
+        .update({"status": "lixeira", "data_exclusao": servicos.agora().isoformat()})
+        .eq("id", documento["id"])
+    )
+    return Response(status_code=204)
