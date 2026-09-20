@@ -13,6 +13,7 @@ export function iniciarComentarios({ aoAtualizar }) {
   const vazio = document.querySelector('#vazio-comentarios');
   const form = document.querySelector('#form-comentario');
   const campo = document.querySelector('#campo-comentario');
+  const campoAutor = document.querySelector('#campo-autor');
   const contador = document.querySelector('#contador-comentario');
   const botao = document.querySelector('#botao-comentar');
   const status = document.querySelector('#status-comentario');
@@ -20,7 +21,7 @@ export function iniciarComentarios({ aoAtualizar }) {
 
   function desenhar(itens) {
     lista.replaceChildren(...itens.map((c) => el('li', { class: 'comentario' },
-      el('p', { class: 'comentario__meta' }, [formatarData(c.data_hora), c.autor ? ` · ${c.autor}` : '']),
+      el('p', { class: 'comentario__meta' }, [formatarData(c.data_hora), ` · ${c.autor || 'Anônimo'}`]),
       el('p', { class: 'comentario__texto' }, c.texto),
     )));
     vazio.hidden = itens.length > 0;
@@ -45,7 +46,8 @@ export function iniciarComentarios({ aoAtualizar }) {
     }
     botao.disabled = true;
     try {
-      await api.incluirComentario(documento.id, { texto });
+      // O nome fica só na memória desta tela (some ao recarregar); vazio vira "Anônimo" apenas na exibição.
+      await api.incluirComentario(documento.id, { texto, autor: campoAutor.value.trim() || null });
       campo.value = '';
       atualizarContador();
       limparAviso(status);
@@ -56,6 +58,7 @@ export function iniciarComentarios({ aoAtualizar }) {
       if (e.codigo === 'DOCUMENTO_EXCLUIDO') {
         avisar(status, 'erro', mensagemDoErro(e));
         campo.disabled = true;
+        campoAutor.disabled = true;
         aoAtualizar(); // o documento sai da lista
       } else if (e.rede) {
         avisar(status, 'erro', 'Falha na conexão. Seu comentário foi mantido.', { rotulo: 'Tentar novamente', aoClicar: () => enviar() });
@@ -83,6 +86,7 @@ export function iniciarComentarios({ aoAtualizar }) {
       titulo.textContent = `Comentários: ${doc.titulo}`;
       campo.value = '';
       campo.disabled = false;
+      campoAutor.disabled = false;
       botao.disabled = false;
       atualizarContador();
       limparAviso(status);

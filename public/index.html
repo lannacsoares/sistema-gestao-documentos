@@ -83,7 +83,10 @@
     <ul id="lista-comentarios" class="comentarios"></ul>
     <p id="vazio-comentarios" class="vazio" hidden>Ainda não há comentários.</p>
     <form id="form-comentario" class="formulario" novalidate>
-      <!-- Espaço reservado para o campo opcional "seu nome" (fase 6) -->
+      <div class="campo">
+        <label for="campo-autor">Seu nome <span class="opcional">(opcional)</span></label>
+        <input id="campo-autor" name="autor" type="text" maxlength="80" autocomplete="off">
+      </div>
       <div class="campo">
         <label for="campo-comentario">Novo comentário</label>
         <textarea id="campo-comentario" name="texto" maxlength="2000"></textarea>
