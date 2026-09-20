@@ -24,15 +24,26 @@
         <a href="/" class="cabecalho__logo"><img src="/img/logo-rmh-branco.png" alt="Resende Mori Hutchison" width="300" height="50"></a>
         <h1>Sistema de Gestão de Documentos</h1>
       </div>
-      <nav aria-label="Principal"><a href="/lixeira.html">Lixeira</a></nav>
+      <nav class="nav" aria-label="Principal"><a href="/" aria-current="page">Documentos</a><a href="/lixeira.html">Lixeira</a></nav>
     </div>
   </header>
 
-  <main class="principal">
+  <main class="principal principal--duas">
     <!-- Espaço reservado para a barra de uso do armazenamento (fase 6) -->
     <div id="uso-armazenamento" hidden></div>
 
-    <section class="secao" aria-labelledby="titulo-envio">
+    <section class="secao" aria-labelledby="titulo-lista">
+      <div class="secao__cabecalho">
+        <h2 id="titulo-lista">Documentos</h2>
+        <a class="atalho-envio" href="#envio">Enviar documento</a>
+      </div>
+      <p class="secao__apoio">Documentos excluídos ficam na lixeira por 30 dias e podem ser restaurados.</p>
+      <div id="status-lista" role="status" aria-live="polite" hidden></div>
+      <ul id="lista-documentos" class="lista"></ul>
+      <p id="vazio-documentos" class="vazio" hidden>Nenhum documento enviado ainda. Use o formulário para enviar o primeiro.</p>
+    </section>
+
+    <section id="envio" class="secao secao--envio" aria-labelledby="titulo-envio">
       <h2 id="titulo-envio">Enviar documento</h2>
       <form id="form-envio" class="formulario" novalidate>
         <div class="campo">
@@ -44,9 +55,13 @@
           <textarea id="campo-descricao" name="descricao" maxlength="2000"></textarea>
         </div>
         <div class="campo">
-          <label for="campo-arquivo">Arquivo</label>
-          <input id="campo-arquivo" name="arquivo" type="file" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" aria-describedby="ajuda-arquivo" required>
-          <p id="ajuda-arquivo" class="ajuda">PDF, JPG ou PNG, até 10 MB.</p>
+          <span class="campo__rotulo" id="rotulo-arquivo">Arquivo</span>
+          <div class="arquivo" id="zona-arquivo">
+            <input id="campo-arquivo" class="arquivo__input" name="arquivo" type="file" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" aria-describedby="ajuda-arquivo" required>
+            <label for="campo-arquivo" class="botao botao--secundario">Escolher arquivo</label>
+            <span id="nome-arquivo" class="arquivo__nome" aria-live="polite">Nenhum arquivo escolhido. Você também pode soltar o arquivo aqui.</span>
+          </div>
+          <p id="ajuda-arquivo" class="ajuda">PDF, JPG ou PNG, até 10 MB. Use apenas documentos fictícios ou públicos.</p>
         </div>
         <div id="area-progresso" hidden>
           <label for="progresso" id="texto-progresso">Enviando…</label>
@@ -58,18 +73,11 @@
         </div>
       </form>
     </section>
-
-    <section class="secao" aria-labelledby="titulo-lista">
-      <h2 id="titulo-lista">Documentos</h2>
-      <div id="status-lista" role="status" aria-live="polite" hidden></div>
-      <ul id="lista-documentos" class="lista"></ul>
-      <p id="vazio-documentos" class="vazio" hidden>Nenhum documento enviado ainda.</p>
-    </section>
   </main>
 
   <dialog id="dlg-comentarios" aria-labelledby="dlg-com-titulo">
     <div class="dialogo__cabecalho">
-      <h2 id="dlg-com-titulo">Comentários</h2>
+      <h2 id="dlg-com-titulo" tabindex="-1">Comentários</h2>
       <button id="dlg-com-fechar" type="button" class="botao botao--secundario botao--pequeno">Fechar</button>
     </div>
     <ul id="lista-comentarios" class="comentarios"></ul>

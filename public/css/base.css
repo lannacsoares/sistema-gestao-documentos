@@ -21,7 +21,7 @@ h1, h2, h3 {
   line-height: 1.25;
   margin: 0 0 var(--esp-2);
 }
-h2 { font-size: 1.25rem; }
+h2 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.01em; }
 h3 { font-size: 1.05rem; }
 p { margin: 0 0 var(--esp-2); }
 
@@ -46,6 +46,10 @@ a { color: var(--cor-acento); }
 .cabecalho__logo img { display: block; height: 2rem; width: auto; }
 .cabecalho h1 { margin: 0; font-size: 1.15rem; font-weight: 600; color: var(--cor-branco); }
 .cabecalho a { color: var(--cor-branco); }
+.nav { display: flex; gap: var(--esp-3); }
+.nav a { text-decoration: none; padding: 0.25rem 0; border-bottom: 2px solid transparent; color: rgba(255, 255, 255, 0.85); }
+.nav a:hover { border-bottom-color: rgba(255, 255, 255, 0.6); color: var(--cor-branco); }
+.nav a[aria-current="page"] { color: var(--cor-branco); font-weight: 600; border-bottom-color: var(--cor-branco); }
 
 .principal {
   flex: 1;
@@ -56,6 +60,19 @@ a { color: var(--cor-acento); }
 }
 
 .secao { margin-bottom: var(--esp-4); }
+.secao > h2, .secao__cabecalho { padding-bottom: var(--esp-1); border-bottom: 1px solid var(--cor-borda); margin-bottom: var(--esp-2); }
+.secao__cabecalho { display: flex; align-items: baseline; justify-content: space-between; gap: var(--esp-2); }
+.secao__cabecalho h2 { margin: 0; }
+.secao__apoio { font-size: 0.9rem; color: var(--cor-texto-suave); }
+
+/* Duas colunas em telas largas: a lista (uso constante) lidera; o envio fica ao lado */
+.principal--duas { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0 var(--esp-4); }
+.principal--duas > #uso-armazenamento { grid-column: 1 / -1; }
+@media (min-width: 56rem) {
+  .principal--duas { grid-template-columns: minmax(0, 1fr) 21rem; align-items: start; }
+  .secao--envio { position: sticky; top: var(--esp-2); background: var(--cor-fundo-suave); border-radius: var(--raio); padding: var(--esp-3); }
+  .secao--envio > h2 { border-bottom-color: var(--cor-borda); }
+}
 
 .rodape {
   background: var(--cor-acento);
@@ -65,6 +82,11 @@ a { color: var(--cor-acento); }
   text-align: center;
 }
 .rodape p { margin: 0; }
+
+/* Elementos do navegador que não desenhamos, na paleta */
+::selection { background: var(--cor-primaria); color: var(--cor-branco); }
+input, textarea { caret-color: var(--cor-acento); }
+* { scrollbar-color: var(--cor-cinza) transparent; }
 
 /* Só para leitores de tela */
 .so-leitor {
