@@ -11,6 +11,7 @@
   background: var(--cor-primaria);
   color: var(--cor-branco);
   cursor: pointer;
+  transition: background-color 150ms ease-out, border-color 150ms ease-out, color 150ms ease-out;
 }
 .botao:hover:not(:disabled) { background: var(--cor-acento); border-color: var(--cor-acento); }
 .botao:disabled { background: var(--cor-fundo-suave); border-color: var(--cor-borda); color: var(--cor-texto-suave); cursor: not-allowed; }
@@ -57,6 +58,7 @@ textarea { min-height: 5rem; resize: vertical; }
 .arquivo--sobre { border-style: solid; border-color: var(--cor-primaria); background: var(--cor-fundo-suave); }
 .arquivo__input { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; }
 .arquivo__input:focus-visible + label { outline: 3px solid var(--cor-acento); outline-offset: 2px; }
+.arquivo { transition: border-color 150ms ease-out, background-color 150ms ease-out; }
 .arquivo .botao { display: inline-flex; align-items: center; }
 .arquivo__nome { flex: 1 1 10rem; font-size: 0.9rem; color: var(--cor-texto-suave); overflow-wrap: anywhere; }
 .arquivo__nome--escolhido { color: var(--cor-texto); font-weight: 600; }
@@ -75,6 +77,7 @@ progress { width: 100%; height: 0.75rem; accent-color: var(--cor-primaria); }
   gap: var(--esp-1) var(--esp-2);
 }
 .aviso[hidden] { display: none; }
+.aviso { animation: aparecer 240ms cubic-bezier(0.16, 1, 0.3, 1); }
 .aviso--erro { color: var(--cor-erro); background: var(--cor-erro-fundo); border-color: var(--cor-erro); }
 .aviso--sucesso { color: var(--cor-sucesso); background: var(--cor-sucesso-fundo); border-color: var(--cor-sucesso); }
 .aviso--info { color: var(--cor-texto); background: var(--cor-aviso-fundo); border-color: var(--cor-cinza); }
@@ -113,6 +116,7 @@ progress { width: 100%; height: 0.75rem; accent-color: var(--cor-primaria); }
 .item__acoes { display: flex; flex-wrap: wrap; align-items: center; gap: var(--esp-1); margin-top: var(--esp-1); }
 .item__acoes .botao--perigo-discreto { margin-left: auto; }
 .item--novo { animation: destaque 2.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.item--saindo { opacity: 0; transition: opacity 180ms ease-in; pointer-events: none; }
 @keyframes destaque { from { background: var(--cor-sucesso-fundo); border-color: var(--cor-sucesso); } to { background: transparent; border-color: var(--cor-borda); } }
 .atalho-envio { font-size: 0.9rem; font-weight: 600; }
 @media (min-width: 56rem) { .atalho-envio { display: none; } }
@@ -148,4 +152,34 @@ dialog::backdrop { background: rgba(3, 46, 66, 0.5); }
   .item__acoes { display: grid; grid-template-columns: 1fr 1fr; }
   .item__acoes .botao--principal, .item__acoes .botao--perigo-discreto { grid-column: 1 / -1; margin-left: 0; }
   .dialogo__acoes .botao { flex: 1 1 100%; }
+}
+
+/* --- Movimento ---
+   Apenas para confirmar ações e mostrar o que mudou: chegada do documento novo, saída ao excluir,
+   mensagens e diálogos. Nada acontece ao abrir a página. */
+@keyframes aparecer { from { opacity: 0; } to { opacity: 1; } }
+
+dialog { opacity: 0; transition: opacity 150ms ease-in, overlay 150ms allow-discrete, display 150ms allow-discrete; }
+dialog[open] { opacity: 1; transition-duration: 260ms; transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
+dialog::backdrop { opacity: 0; transition: opacity 150ms ease-in, overlay 150ms allow-discrete, display 150ms allow-discrete; }
+dialog[open]::backdrop { opacity: 1; transition-duration: 260ms; }
+@starting-style {
+  dialog[open] { opacity: 0; }
+  dialog[open]::backdrop { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .aviso { animation-name: aparecer-subindo; }
+  @keyframes aparecer-subindo { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+
+  .item--novo { animation: destaque 2.4s cubic-bezier(0.16, 1, 0.3, 1), chegada 480ms cubic-bezier(0.16, 1, 0.3, 1); }
+  @keyframes chegada { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: none; } }
+
+  .item--saindo { transform: translateX(12px); transition: opacity 180ms ease-in, transform 180ms ease-in; }
+
+  .botao:active:not(:disabled) { transform: translateY(1px); }
+
+  dialog { transform: translateY(10px); transition: opacity 150ms ease-in, transform 150ms ease-in, overlay 150ms allow-discrete, display 150ms allow-discrete; }
+  dialog[open] { transform: none; }
+  @starting-style { dialog[open] { transform: translateY(14px); } }
 }

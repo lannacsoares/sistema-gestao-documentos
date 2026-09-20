@@ -23,6 +23,8 @@ const zonaArquivo = document.querySelector('#zona-arquivo');
 const nomeArquivo = document.querySelector('#nome-arquivo');
 const TEXTO_SEM_ARQUIVO = nomeArquivo.textContent;
 const TEMPO_MENSAGEM_MS = 8000;
+const TEMPO_SAIDA_MS = 180; // igual à transição .item--saindo
+const reduzirMovimento = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 const envio = criarEnvio();
 const comentarios = iniciarComentarios({ aoAtualizar: () => carregarLista() });
@@ -141,7 +143,7 @@ async function carregarLista(destacarId) {
     const novo = typeof destacarId === 'string' && listaDocumentos.querySelector(`[data-id="${CSS.escape(destacarId)}"]`);
     if (novo) {
       novo.classList.add('item--novo');
-      novo.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      novo.scrollIntoView({ block: 'nearest', behavior: reduzirMovimento() ? 'auto' : 'smooth' });
     }
   } catch (e) {
     avisar(statusLista, 'erro', mensagemDoErro(e), { rotulo: 'Tentar novamente', aoClicar: () => carregarLista() });
@@ -184,6 +186,12 @@ async function excluir(doc) {
   try {
     await api.excluirDocumento(doc.id);
     limparAviso(statusLista);
+    // O item se despede antes de a lista recarregar: mostra para onde o documento foi.
+    const item = listaDocumentos.querySelector(`[data-id="${CSS.escape(doc.id)}"]`);
+    if (item) {
+      item.classList.add('item--saindo');
+      await new Promise((r) => setTimeout(r, TEMPO_SAIDA_MS));
+    }
   } catch (e) {
     avisar(statusLista, 'erro', mensagemDoErro(e));
   }
