@@ -1,0 +1,29 @@
+# Deploy no Render (plano gratuito): um único serviço serve a API (/api) e o front-end (public/).
+# Os valores marcados com sync: false são preenchidos no painel do Render (nunca no Git).
+services:
+  - type: web
+    name: sistema-gestao-documentos
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/saude
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.5
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SUPABASE_BUCKET
+        value: documentos
+      - key: MAX_FILE_MB
+        value: "10"
+      - key: QUOTA_MB
+        value: "900"
+      - key: TRASH_DAYS
+        value: "30"
+      - key: PENDING_TTL_MIN
+        value: "60"
+      - key: SIGNED_URL_TTL_S
+        value: "300"
