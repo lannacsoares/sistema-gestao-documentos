@@ -13,6 +13,7 @@ ERROS = {
     "TAMANHO_EXCEDIDO": (413, "O arquivo tem {tamanho_mb} MB; o limite é {limite_mb} MB."),
     "TIPO_NAO_PERMITIDO": (415, "Só é possível enviar arquivos PDF, JPG ou PNG."),
     "ARQUIVO_INVALIDO": (422, "O conteúdo do arquivo não corresponde ao tipo informado."),
+    "ENVIO_INCOMPLETO": (422, "O envio do arquivo não foi concluído. Tente enviar novamente."),
     "SEM_ESPACO": (
         507,
         "Não há espaço suficiente: faltam {faltam_mb} MB. "
