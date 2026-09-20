@@ -57,12 +57,13 @@ async function aoEnviar(evento) {
   }
 
   mostrarEnvio(true);
+  let enviado = false;
   try {
     await envio.enviar({ titulo, descricao: campoDescricao.value.trim() || null, arquivo, mime }, atualizarProgresso);
+    enviado = true;
     form.reset();
     envio.reiniciar();
     avisar(statusEnvio, 'sucesso', 'Documento enviado com sucesso.');
-    await carregarLista();
   } catch (e) {
     // O formulário e o arquivo escolhido permanecem como estão.
     const acao = e.rede ? { rotulo: 'Tentar novamente', aoClicar: () => form.requestSubmit() } : undefined;
@@ -70,6 +71,7 @@ async function aoEnviar(evento) {
   } finally {
     mostrarEnvio(false); // nunca deixa o botão travado
   }
+  if (enviado) carregarLista();
 }
 
 form.addEventListener('submit', aoEnviar);

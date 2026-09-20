@@ -43,11 +43,13 @@ export function avisar(regiao, tipo, texto, acao) {
   const rotulos = { erro: 'Atenção:', sucesso: 'Pronto:', info: 'Aviso:' };
   regiao.className = `aviso aviso--${tipo}`;
   regiao.hidden = false;
-  regiao.replaceChildren(
+  const botao = acao && el('button', { type: 'button', class: 'botao botao--secundario botao--pequeno', onclick: acao.aoClicar }, acao.rotulo);
+  // replaceChildren transformaria um valor vazio em texto "undefined": só passa o que existe.
+  regiao.replaceChildren(...[
     el('span', { class: 'aviso__rotulo' }, rotulos[tipo]),
     el('span', { class: 'aviso__texto' }, texto),
-    acao && el('button', { type: 'button', class: 'botao botao--secundario botao--pequeno', onclick: acao.aoClicar }, acao.rotulo),
-  );
+    botao,
+  ].filter(Boolean));
 }
 
 export function limparAviso(regiao) {
