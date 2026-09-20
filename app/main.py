@@ -1,5 +1,4 @@
-"""Ponto de entrada da API. A Vercel detecta a instância `app` neste arquivo."""
-import os
+"""Ponto de entrada da API. O Render inicia esta instância `app` (ver render.yaml)."""
 from pathlib import Path
 
 from fastapi import FastAPI
@@ -27,9 +26,7 @@ def saude():
     return {"status": "ok"}
 
 
-# Em desenvolvimento local a própria API serve o front-end. Na Vercel, `public/` é servido pela CDN
-# no nível da plataforma (a documentação pede para NÃO montá-lo com app.mount), então aqui só monta
-# fora da Vercel, onde a variável VERCEL não existe.
+# O front-end (`public/`) é servido pela própria API, tanto no Render quanto localmente.
 _PUBLIC = Path(__file__).resolve().parent.parent / "public"
-if _PUBLIC.is_dir() and not os.getenv("VERCEL"):
+if _PUBLIC.is_dir():
     app.mount("/", StaticFiles(directory=_PUBLIC, html=True), name="front")

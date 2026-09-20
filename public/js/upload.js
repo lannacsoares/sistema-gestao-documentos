@@ -1,6 +1,6 @@
 // Fluxo de envio em duas etapas, com retentativa (CB03).
 // 1) API cria o registro e devolve uma URL assinada; 2) o navegador envia o arquivo direto
-// ao Storage (nunca passa pela função da Vercel); 3) a API confirma.
+// ao Storage (nunca passa pela API); 3) a API confirma.
 import { ErroApi, api } from './api.js';
 
 const TEMPO_LIMITE_ENVIO_MS = 120000;

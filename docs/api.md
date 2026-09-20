@@ -5,7 +5,7 @@ Erros sempre no formato `{"erro": {"codigo": "...", "mensagem": "..."}}`, com a 
 
 ## Upload em duas etapas
 
-O arquivo **nunca passa pela API** (limite de 4,5 MB da Vercel): vai direto do navegador ao Storage.
+O arquivo **nunca passa pela API** (a API fica leve e o envio, rápido): vai direto do navegador ao Storage.
 
 ### 1. `POST /api/documentos` → 201
 Entrada (JSON): `titulo`, `descricao` (opcional), `nome_original`, `tipo_mime`, `tamanho_bytes`.

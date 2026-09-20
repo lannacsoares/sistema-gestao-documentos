@@ -3,7 +3,7 @@ import os
 
 from dotenv import load_dotenv
 
-# Em desenvolvimento lê o arquivo .env; na Vercel as variáveis já vêm do ambiente.
+# Em desenvolvimento lê o arquivo .env; no Render as variáveis já vêm do ambiente.
 load_dotenv()
 
 

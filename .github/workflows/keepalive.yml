@@ -24,5 +24,5 @@ jobs:
             echo "A variável APP_URL não está configurada." >&2
             exit 1
           fi
-          # Retentativas toleram a partida a frio da função na Vercel.
+          # Retentativas toleram a partida a frio do serviço no Render.
           curl -fsS --retry 3 --retry-delay 10 --max-time 60 "$APP_URL/api/saude"
