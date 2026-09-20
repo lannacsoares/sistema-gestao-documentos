@@ -67,7 +67,7 @@ Pré-requisitos: **Python 3.13 ou superior** (testado com 3.13 e 3.14), **Git** 
    python scripts/gerar_exemplos.py
    python scripts/seed.py
    ```
-6. **Testes:** `pytest`
+6. **Testes:** `pytest` (não precisa de `.env` nem de Supabase)
 
 ## Observações e limitações conhecidas
 
