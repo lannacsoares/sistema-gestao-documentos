@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lixeira — Sistema de Gestão de Documentos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@600;700&display=swap">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/componentes.css">
+</head>
+<body>
+  <div id="faixa-offline" class="faixa-offline" role="status" hidden>
+    Você está sem conexão com a internet. Assim que ela voltar, tente novamente.
+  </div>
+
+  <header class="cabecalho">
+    <div class="cabecalho__interno">
+      <h1>Sistema de Gestão de Documentos</h1>
+      <nav aria-label="Principal"><a href="/">Voltar aos documentos</a></nav>
+    </div>
+  </header>
+
+  <main class="principal">
+    <section class="secao" aria-labelledby="titulo-lixeira">
+      <h2 id="titulo-lixeira">Lixeira</h2>
+      <p>Os documentos ficam aqui por 30 dias antes de serem removidos.</p>
+      <div id="status-lixeira" role="status" aria-live="polite" hidden></div>
+      <ul id="lista-lixeira" class="lista"></ul>
+      <p id="vazio-lixeira" class="vazio" hidden>A lixeira está vazia.</p>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <p>Projeto de avaliação. Use apenas documentos fictícios ou públicos.</p>
+  </footer>
+
+  <script type="module" src="/js/lixeira.js"></script>
+</body>
+</html>
