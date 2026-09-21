@@ -94,6 +94,49 @@ flowchart LR
 
 O arquivo vai direto do navegador ao Storage; a API só cria o registro, confere o resultado (tamanho e conteúdo real) e ativa o documento. Para visualizar ou baixar, a API gera um link temporário.
 
+## Fluxos principais
+
+### Upload e casos de borda
+
+```mermaid
+flowchart TD
+    A([Usuário escolhe arquivo e informa título]) --> B{Navegador: tamanho até 10 MB e tipo PDF/JPG/PNG?}
+    B -- Não --> E1[/Mensagem de erro no formulário/]
+    B -- Sim --> C[POST à API para criar registro]
+    C --> D{API: tamanho, extensão e cota válidos?}
+    D -- Arquivo grande ou tipo inválido --> E2[/API recusa com erro 4xx/]
+    D -- Cota de 900 MB excedida --> E3[/Upload bloqueado antes de enviar o arquivo/]
+    D -- Sim --> F[Cria registro com status pendente e gera URL assinada]
+    F --> G[Cliente envia arquivo direto ao Supabase Storage]
+    G --> H{Envio concluído?}
+    H -- Falha de conexão --> R[Mantém dados do formulário e permite tentar de novo]
+    R --> G
+    H -- Sim --> I[Cliente confirma o upload à API]
+    I --> J{Conteúdo real e tamanho conferem?}
+    J -- Não --> E4[/Remove arquivo e registro e informa erro/]
+    J -- Sim --> K[Status muda para ativo]
+    K --> L{Uso da cota maior ou igual a 80%?}
+    L -- Sim --> M[Exibe alerta visual na barra de armazenamento]
+    L -- Não --> N([Documento aparece na listagem])
+    M --> N
+```
+
+### Lixeira, restauração e comentários
+
+```mermaid
+flowchart TD
+    A([Usuário exclui documento]) --> B[Status muda para lixeira e data_exclusao é registrada]
+    B --> C{Ação posterior}
+    C -- Restaurar --> D[Status volta para ativo com comentários preservados]
+    C -- Tentar comentar --> E[/API rejeita: documento na lixeira/]
+    C -- Abrir seção de excluídos --> F{Passaram 30 dias?}
+    F -- Não --> G([Documento segue na lixeira])
+    F -- Sim --> H[Limpeza automática apaga arquivo e registro]
+    H --> I[Comentários vinculados removidos em cascata]
+    I --> J([Exclusão definitiva])
+    D --> K([Documento volta à listagem])
+```
+
 ## Modelo de dados
 
 ```mermaid
