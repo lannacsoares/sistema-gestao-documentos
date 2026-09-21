@@ -180,7 +180,7 @@ db/           schema.sql (tabelas, função de cota e bucket)
 scripts/      gerar_exemplos.py, seed.py, testar_deploy.py
 exemplos/     arquivos de exemplo e de teste (fictícios e públicos)
 tests/        testes automatizados (pytest)
-docs/         API, testes de casos de borda e planejamento por fases
+docs/         referência da API e testes de casos de borda
 .github/      rotina anti-pausa (keepalive.yml)
 render.yaml   configuração da hospedagem
 ```
