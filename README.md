@@ -6,7 +6,7 @@ Aplicação web para **enviar documentos (PDF, JPG ou PNG)**, consultá-los em u
 
 **https://sistema-gestao-documentos.onrender.com** (sem login)
 
-> O plano gratuito da hospedagem "dorme" após alguns minutos sem uso. **A primeira abertura pode levar cerca de 1 minuto**; depois disso o sistema responde normalmente. O sistema já vem com 8 documentos públicos na lista (projetos de lei da Câmara dos Deputados) e 4 documentos fictícios de teste na Lixeira, para demonstrar a restauração.
+> O plano gratuito da hospedagem "dorme" após alguns minutos sem uso. **A primeira abertura pode levar cerca de 1 minuto**; depois disso o sistema responde normalmente. O sistema já vem com 10 documentos na lista (8 projetos de lei públicos da Câmara dos Deputados em PDF, mais uma imagem PNG e uma JPG, fictícias) e 4 documentos fictícios de teste na Lixeira, para demonstrar a restauração.
 
 ## Tecnologias
 

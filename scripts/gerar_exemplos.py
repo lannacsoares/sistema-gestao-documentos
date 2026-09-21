@@ -7,6 +7,7 @@ O arquivo grande.png (~27 MB) não é versionado (.gitignore); o script o recria
 """
 import os
 import shutil
+import textwrap
 from pathlib import Path
 
 from faker import Faker
@@ -75,6 +76,49 @@ def gerar_imagens(png: Path, jpg: Path) -> None:
     imagem.save(jpg, quality=90)
 
 
+def gerar_comprovante_png(destino: Path) -> None:
+    """Comprovante de pagamento fictício em PNG (estilo recibo)."""
+    imagem = Image.new("RGB", (800, 1000), "#FBFBF8")
+    d = ImageDraw.Draw(imagem)
+    d.rectangle([24, 24, 776, 976], outline="#0D3638", width=3)
+    d.text((60, 60), "COMPROVANTE DE PAGAMENTO", fill="#0D3638", font=_fonte(36))
+    d.text((60, 112), "DOCUMENTO FICTICIO - TESTE", fill="#A03040", font=_fonte(26))
+    linhas = [
+        ("Pagador", fake.name()), ("Beneficiario", fake.company()),
+        ("Valor", f"R$ {fake.pydecimal(left_digits=3, right_digits=2, positive=True)}".replace(".", ",")),
+        ("Data", fake.date_this_year().strftime("%d/%m/%Y")), ("Autenticacao", fake.bothify("????-####-????").upper()),
+    ]
+    y = 220
+    for rotulo, valor in linhas:
+        d.text((60, y), rotulo, fill="#5A5B5D", font=_fonte(24))
+        d.text((60, y + 34), valor, fill="#3A3A3A", font=_fonte(32))
+        d.line([60, y + 84, 740, y + 84], fill="#D5D9DA", width=2)
+        y += 120
+    d.text((60, 900), "Gerado por scripts/gerar_exemplos.py. Nenhum dado e real.", fill="#5A5B5D", font=_fonte(20))
+    imagem.save(destino, optimize=True)
+
+
+def gerar_digitalizado_jpg(destino: Path) -> None:
+    """Página fictícia 'digitalizada' em JPG: texto, ruído leve e uma pequena inclinação."""
+    pagina = Image.new("RGB", (900, 1200), "#F4F3EE")
+    d = ImageDraw.Draw(pagina)
+    d.text((70, 80), "DECLARACAO (DOCUMENTO FICTICIO)", fill="#222222", font=_fonte(34))
+    texto = (
+        f"Eu, {fake.name()}, declaro para os devidos fins que este e um documento inventado, "
+        "criado apenas para demonstrar o envio de imagens no sistema de gestao de documentos. "
+        f"Local e data: {fake.city()}, {fake.date_this_year().strftime('%d/%m/%Y')}. "
+        "Nenhuma informacao deste arquivo e real e ele nao possui valor juridico."
+    )
+    y = 170
+    for linha in textwrap.wrap(texto, width=52):
+        d.text((70, y), linha, fill="#333333", font=_fonte(26))
+        y += 48
+    d.text((70, 1080), "Documento ficticio para testes. Nenhum dado e real.", fill="#A03040", font=_fonte(22))
+    pagina = pagina.rotate(1.2, fillcolor="#E9E8E2", expand=False)
+    ruido = Image.effect_noise(pagina.size, 12).convert("RGB")
+    Image.blend(pagina, ruido, 0.05).save(destino, quality=85)
+
+
 def gerar_grande(destino: Path) -> None:
     """Ruído aleatório 3000x3000: não comprime, então o PNG fica com ~27 MB."""
     Image.frombytes("RGB", (3000, 3000), os.urandom(3000 * 3000 * 3)).save(destino, compress_level=1)
@@ -85,6 +129,8 @@ def main() -> None:
     pdf = PASTA / "procuracao_ficticia.pdf"
     gerar_pdf(pdf)
     gerar_laudo(PASTA / "laudo_ficticio.pdf")
+    gerar_comprovante_png(PASTA / "comprovante_pagamento_ficticio.png")
+    gerar_digitalizado_jpg(PASTA / "declaracao_digitalizada_ficticia.jpg")
     gerar_imagens(PASTA / "comprovante_ficticio.png", PASTA / "comprovante_ficticio.jpg")
 
     (PASTA / "vazio.pdf").write_bytes(b"")  # 0 bytes

@@ -7,7 +7,7 @@ Uso, na raiz do projeto, com o .env apontando para o Supabase do deploy:
 Passa pelas mesmas validações da API (validadores.py) e envia os arquivos pelo servidor.
 É idempotente: o título identifica cada exemplo. Se ele já existe, não duplica; se foi excluído de vez,
 é recriado. Os exemplos públicos ficam na lista (se um visitante os mandou para a lixeira, são
-restaurados). Os documentos fictícios de teste ficam na lixeira, para demonstrar a Lixeira.
+restaurados). Os documentos fictícios de teste ficam na lixeira, para demonstrar a Lixeira; duas imagens (PNG e JPG) ficam na lista.
 """
 import sys
 from datetime import datetime, timedelta, timezone
@@ -38,12 +38,20 @@ FICTICIOS = [
     ("comprovante_ficticio.jpg", "Comprovante em imagem JPG (fictício)", "Imagem de teste em formato JPG. DOCUMENTO FICTÍCIO.", 4,
      [("Mesmo conteúdo da versão PNG.", None)]),
 ]
+# Imagens fictícias que ficam na lista, para mostrar outros formatos além de PDF.
+IMAGENS_NA_LISTA = [
+    ("comprovante_pagamento_ficticio.png", "Comprovante de pagamento em PNG (fictício)", "Imagem PNG de um comprovante inventado. DOCUMENTO FICTÍCIO.", 3,
+     [("Valor e data conferem com o extrato.", "Ana"), ("Anexar ao processo.", None)]),
+    ("declaracao_digitalizada_ficticia.jpg", "Declaração digitalizada em JPG (fictícia)", "Foto de uma página inventada, como se fosse digitalizada. DOCUMENTO FICTÍCIO.", 2,
+     [("Digitalização legível; o texto ocupa só o topo da página.", "Bruno")]),
+]
+NOMES_NA_LIXEIRA = {f[0] for f in FICTICIOS}
 DESCRICAO_PUBLICA = "Documento público da Câmara dos Deputados. Origem e data de acesso em exemplos/publicos/ORIGEM.md."
 COMENTARIOS_PUBLICOS = [("Texto público, útil como exemplo de leitura e comentários.", "Equipe jurídica"), ("Revisar a tramitação atual antes de citar.", None)]
 
 
 def _lista_de_exemplos():
-    itens = [(EXEMPLOS / nome, *resto) for nome, *resto in FICTICIOS]
+    itens = [(EXEMPLOS / nome, *resto) for nome, *resto in FICTICIOS + IMAGENS_NA_LISTA]
     for i, arquivo in enumerate(sorted((EXEMPLOS / "publicos").glob("*.pdf"))):
         titulo = "Proposição pública: " + arquivo.stem.replace("_", " ")
         itens.append((arquivo, titulo, DESCRICAO_PUBLICA, 12 + i, COMENTARIOS_PUBLICOS))
@@ -95,7 +103,8 @@ def _criar(arquivo: Path, titulo: str, descricao: str, dias: int, comentarios) -
 
 def main() -> None:
     for arquivo, titulo, descricao, dias, comentarios in _lista_de_exemplos():
-        fictício = arquivo.parent == EXEMPLOS  # os fictícios ficam na lixeira; os públicos, na lista
+        # Só os fictícios de FICTICIOS ficam na lixeira; imagens de exemplo e públicos ficam na lista.
+        fictício = arquivo.name in NOMES_NA_LIXEIRA
         if not arquivo.exists():
             print(f"PULADO   {titulo}: {arquivo.name} não existe (rode scripts/gerar_exemplos.py)")
             continue
