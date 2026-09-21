@@ -5,8 +5,9 @@ Uso, na raiz do projeto, com o .env apontando para o Supabase do deploy:
     python scripts/seed.py
 
 Passa pelas mesmas validações da API (validadores.py) e envia os arquivos pelo servidor.
-É idempotente: o título identifica cada exemplo. Se ele já existe, não duplica; se um visitante o
-mandou para a lixeira, ele é restaurado; se foi excluído de vez, é recriado.
+É idempotente: o título identifica cada exemplo. Se ele já existe, não duplica; se foi excluído de vez,
+é recriado. Os exemplos públicos ficam na lista (se um visitante os mandou para a lixeira, são
+restaurados). Os documentos fictícios de teste ficam na lixeira, para demonstrar a Lixeira.
 """
 import sys
 from datetime import datetime, timedelta, timezone
@@ -56,6 +57,11 @@ def _existente(titulo: str):
     return linhas[0] if linhas else None
 
 
+def _mudar_status(id_: str, status: str) -> None:
+    dados = {"status": status, "data_exclusao": datetime.now(timezone.utc).isoformat() if status == "lixeira" else None}
+    servicos.executar(servicos.tabela("documentos").update(dados).eq("id", id_))
+
+
 def _criar(arquivo: Path, titulo: str, descricao: str, dias: int, comentarios) -> None:
     dados = arquivo.read_bytes()
     if len(dados) > LIMITE_SEED:
@@ -89,21 +95,27 @@ def _criar(arquivo: Path, titulo: str, descricao: str, dias: int, comentarios) -
 
 def main() -> None:
     for arquivo, titulo, descricao, dias, comentarios in _lista_de_exemplos():
+        fictício = arquivo.parent == EXEMPLOS  # os fictícios ficam na lixeira; os públicos, na lista
         if not arquivo.exists():
             print(f"PULADO   {titulo}: {arquivo.name} não existe (rode scripts/gerar_exemplos.py)")
             continue
         atual = _existente(titulo)
-        if atual and atual["status"] == "ativo":
-            print(f"JÁ EXISTE {titulo}")
-        elif atual:  # foi para a lixeira: restaura
-            servicos.executar(servicos.tabela("documentos").update({"status": "ativo", "data_exclusao": None}).eq("id", atual["id"]))
-            print(f"RESTAURADO {titulo}")
-        else:
+        if atual is None:
             try:
                 _criar(arquivo, titulo, descricao, dias, comentarios)
             except ErroApi as e:
                 raise SystemExit(f"FALHOU   {titulo}: {e.codigo}") from None
             print(f"CRIADO   {titulo}")
+            atual = _existente(titulo)
+        elif fictício and atual["status"] == "lixeira" or not fictício and atual["status"] == "ativo":
+            print(f"JÁ EXISTE {titulo}")
+            continue
+        if fictício and atual["status"] == "ativo":
+            _mudar_status(atual["id"], "lixeira")
+            print(f"  -> enviado para a lixeira")
+        elif not fictício and atual["status"] == "lixeira":
+            _mudar_status(atual["id"], "ativo")
+            print(f"RESTAURADO {titulo}")
 
 
 if __name__ == "__main__":

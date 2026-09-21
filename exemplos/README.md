@@ -16,4 +16,4 @@ python scripts/gerar_exemplos.py
 python scripts/seed.py
 ```
 
-O `seed.py` cria os documentos e comentários de exemplo passando pelas mesmas validações da API. Pode ser executado de novo sem duplicar: itens que já existem são mantidos, itens enviados para a lixeira são restaurados e itens excluídos de vez são recriados.
+O `seed.py` cria os documentos e comentários de exemplo passando pelas mesmas validações da API. Os PDFs públicos ficam na lista de documentos; os documentos fictícios de teste ficam na **Lixeira**, para demonstrar a restauração. Pode ser executado de novo sem duplicar: itens que já existem são mantidos, públicos enviados para a lixeira voltam para a lista e itens excluídos de vez são recriados.

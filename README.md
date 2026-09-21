@@ -6,7 +6,7 @@ Aplicação web para **enviar documentos (PDF, JPG ou PNG)**, consultá-los em u
 
 **https://sistema-gestao-documentos.onrender.com** (sem login)
 
-> O plano gratuito da hospedagem "dorme" após alguns minutos sem uso. **A primeira abertura pode levar cerca de 1 minuto**; depois disso o sistema responde normalmente. O sistema já vem com 8 documentos de exemplo (fictícios e públicos).
+> O plano gratuito da hospedagem "dorme" após alguns minutos sem uso. **A primeira abertura pode levar cerca de 1 minuto**; depois disso o sistema responde normalmente. O sistema já vem com 8 documentos públicos na lista (projetos de lei da Câmara dos Deputados) e 4 documentos fictícios de teste na Lixeira, para demonstrar a restauração.
 
 ## Tecnologias
 
@@ -72,7 +72,7 @@ Pré-requisitos: **Python 3.13 ou superior** (testado com 3.13 e 3.14), **Git** 
 ## Observações e limitações conhecidas
 
 - **Arquivos ficam no Supabase Storage (nuvem), não em uma pasta local.** A prova menciona armazenamento local, mas para ter um deploy público o disco do servidor gratuito é temporário e seria apagado; por isso os arquivos ficam no bucket.
-- **Sem login** (conforme a prova): qualquer pessoa com o link vê e pode excluir documentos. Use apenas documentos **fictícios ou públicos**. Se os exemplos forem excluídos, `python scripts/seed.py` os restaura.
+- **Sem login** (conforme a prova): qualquer pessoa com o link vê e pode excluir documentos. Use apenas documentos **fictícios ou públicos**. Se os exemplos forem excluídos, `python scripts/seed.py` os restaura (os públicos voltam para a lista; os fictícios, para a lixeira).
 - **Upload direto ao Storage:** o navegador envia o arquivo direto ao Storage por uma URL assinada e temporária; o arquivo nunca passa pela API. Isso mantém a API leve e o envio rápido.
 - **Plano gratuito do Supabase:** 1 GB de arquivos e 500 MB de banco (a cota de trabalho do sistema é 900 MB). O Supabase pausa projetos com pouca atividade após 7 dias; uma rotina no GitHub Actions ([keepalive.yml](.github/workflows/keepalive.yml)) consulta o sistema a cada 3 dias. Se o projeto pausar mesmo assim, use **Supabase Dashboard → Restore/Resume project**.
 - **Partida a frio:** no plano gratuito do Render, a primeira requisição após um período parado pode levar cerca de 1 minuto.
